@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
 <body>
-<p>
+<h1>
   HOME ROUTE
-</p>
+</h1>
+
+<p>Click <a th:href="@{/profile}">here</a> profile.</p>
+<p>Click <a th:href="@{/signup}">here</a> signup.</p>
+<p>Click <a th:href="@{/login}">here</a> login.</p>
 </body>
 </html>

@@ -6,7 +6,11 @@
 </head>
 <body>
 <h2>Welcome to <span th:text="${username}"></span> 's profile</h2>
-<p th:text="'My department is :' + ${department}"></p>
+
+<p th:text="'First Name : '+ ${firstName}"></p>
+<p th:text="'Last Name : '+ ${lastName}"></p>
+<p th:text="'Date of birth : '+ ${dateofbirth}"></p>
+<p th:text="'Bio '+ ${bio}"></p>
 
 
 <form th:action="@{/logout}" method="post">

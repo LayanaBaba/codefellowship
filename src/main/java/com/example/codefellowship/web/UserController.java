@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
@@ -65,6 +66,12 @@ public class UserController {
         ApplicationUser applicationUser = applicationUserRepository.findUserByUsername(userDetails.getUsername());
         model.addAttribute("username", userDetails.getUsername());
         return "profile";
+    }
+
+    @GetMapping("/users/{id}")
+    public String getUserData(@PathVariable Long id){
+        ApplicationUser applicationUser = applicationUserRepository.getById(id);
+        return "users";
     }
 
 }

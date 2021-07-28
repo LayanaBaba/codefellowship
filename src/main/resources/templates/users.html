@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>User Data Page</title>
+</head>
+<body>
+
+            <h2>Welcome to <span th:text="${userInfo.username}"></span> 's profile</h2>
+
+            <p th:text="'First Name : '+ ${userInfo.firstName}"></p>
+            <p th:text="'Last Name : '+ ${userInfo.lastName}"></p>
+            <p th:text="'Date of birth : '+ ${userInfo.dateofbirth}"></p>
+            <p th:text="'Bio '+ ${userInfo.bio}"></p>
+
+
+    </div>
+</body>
+</html>
