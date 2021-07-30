@@ -5,14 +5,12 @@
     <title>Profile Page</title>
 </head>
 <body>
-<h2>Welcome to <span th:text="${username}"></span> 's profile</h2>
 
-<p th:text="'First Name : '+ ${firstName}"></p>
-<p th:text="'Last Name : '+ ${lastName}"></p>
-<p th:text="'Date of birth : '+ ${dateofbirth}"></p>
-<p th:text="'Bio '+ ${bio}"></p>
-
-
+<p th:text="'Welcome to '+ ${user.username}+ ' s profile'"></p>
+<p th:text="'First Name : '+ ${user.firstName}"></p>
+<p th:text="'Last Name : '+ ${user.lastName}"></p>
+<p th:text="'Date of birth : '+ ${user.dateOfBirth}"></p>
+<p th:text="'Bio '+ ${user.bio}"></p>
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="Sign Out"/>
 </form>

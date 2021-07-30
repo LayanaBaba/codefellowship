@@ -13,20 +13,39 @@ public class ApplicationUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(unique = true)
-    private String password;
+    private Long id;
     private String username;
+    private String password;
+
     private String firstName;
     private String lastName;
     private String dateOfBirth;
     private String bio;
 
+
+
+
     public ApplicationUser() {
     }
 
-    public ApplicationUser(String password, String username, String firstName, String lastName, String dateOfBirth, String bio) {
+    public ApplicationUser(String username, String password) {
+        this.password = password;
+        this.username = username;
+    }
+
+
+    public ApplicationUser(Long id, String username, String password, String firstName, String lastName, String dateOfBirth, String bio) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.bio = bio;
+    }
+
+    public ApplicationUser(String username, String password, String firstName, String lastName, String dateOfBirth, String bio) {
         this.password = password;
         this.username = username;
         this.firstName = firstName;
@@ -84,15 +103,6 @@ public class ApplicationUser implements UserDetails {
         return null;
     }
 
-
-//    public Set<Role> getRoles() {
-//        return roles;
-//    }
-
-//    public void setRoles(Set<Role> roles) {
-//        this.roles = roles;
-//    }
-
     @Override
     public String getPassword() {
         return password;
@@ -105,22 +115,22 @@ public class ApplicationUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return false;
     }
 
 
