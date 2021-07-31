@@ -16,25 +16,25 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
+@Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    UserDetailsServiceImpl userDetailsService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Bean
-    BCryptPasswordEncoder bCryptPasswordEncoder() {
+    BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
+
+
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/signup").permitAll()
-                .antMatchers("/login").permitAll()
+//                .antMatchers("/login").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

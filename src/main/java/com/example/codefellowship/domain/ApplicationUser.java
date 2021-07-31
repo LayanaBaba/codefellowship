@@ -13,7 +13,7 @@ public class ApplicationUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true)
+//    @Column(unique = true)
     private Long id;
     private String username;
     private String password;
@@ -24,7 +24,16 @@ public class ApplicationUser implements UserDetails {
     private String bio;
 
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "applicationUser")
+    private List<Post> posts;
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
 
     public ApplicationUser() {
     }
@@ -115,22 +124,22 @@ public class ApplicationUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
 

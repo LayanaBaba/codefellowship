@@ -5,12 +5,18 @@
     <title>Home</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header">...</div>
+
 <h1>
   HOME ROUTE
 </h1>
 
-<p>Click <a th:href="@{/profile}">here</a> profile.</p>
-<p>Click <a th:href="@{/signup}">here</a> signup.</p>
-<p>Click <a th:href="@{/login}">here</a> login.</p>
+<p>* `/` : contains basic information about the site, as well as a link to the “sign up” page.
+    .</p>
+<p>* `/signup` : contains sign up Form, the user could fill it and create a new account.</p>
+<p>* `/login` : the user could sign in his/her account.</p>
+<p>* `/users/{id}` and `/porfile` : include a default profile picture, which is the same for every user, and their basic information.
+</p>
+
 </body>
 </html>

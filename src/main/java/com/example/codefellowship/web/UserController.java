@@ -34,7 +34,10 @@ public class UserController {
 
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    BCryptPasswordEncoder bcryptPasswordEncoder;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
 
@@ -56,12 +59,12 @@ public class UserController {
                                     @RequestParam String dateOfBirth,
                                     @RequestParam String bio){
 //        password= PasswordEncoder.encode(password);
-        ApplicationUser applicationUser = new ApplicationUser(username, passwordEncoder.encode(password), firstName, lastName, dateOfBirth, bio);
+        ApplicationUser applicationUser = new ApplicationUser(username, bcryptPasswordEncoder.encode(password), firstName, lastName, dateOfBirth, bio);
 //       applicationUser= applicationUserRepository.save(applicationUser);
         applicationUserRepository.save(applicationUser);
 
-        //        Authentication authentication = new UsernamePasswordAuthenticationToken(applicationUser, null, applicationUser.getAuthorities());
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(applicationUser, null, applicationUser.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         return new RedirectView("/");
     }
 
@@ -75,7 +78,8 @@ public class UserController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         ApplicationUser applicationUser = applicationUserRepository.findUserByUsername(userDetails.getUsername());
-        model.addAttribute("user", userDetails.getUsername());
+        model.addAttribute("user", applicationUser);
+        model.addAttribute("posts",applicationUser.getPosts());
         return "profile";
     }
 
