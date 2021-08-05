@@ -24,6 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 
 @Controller
@@ -42,8 +43,12 @@ public class UserController {
 
 
     @GetMapping("/")
-    public String homePage(){
-        return "index";
+    public String homePage(Principal principal, Model model){
+        if(principal!=null){
+            model.addAttribute("user", applicationUserRepository.findUserByUsername(principal.getName()));
+            return "index";
+        }
+        return "logIn";
     }
 
     @GetMapping("/signup")
