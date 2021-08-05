@@ -7,12 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-
-//@ComponentScan
-
-//@Configuration
-//@EnableAutoConfiguration
-//@ComponentScan(basePackages = {"com.spring.beans" })
 @SpringBootApplication
 public class CodefellowshipApplication {
 
