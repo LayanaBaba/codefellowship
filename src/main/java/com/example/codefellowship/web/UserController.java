@@ -2,8 +2,11 @@ package com.example.codefellowship.web;
 
 import com.example.codefellowship.domain.ApplicationUser;
 import com.example.codefellowship.infrastructure.ApplicationUserRepository;
+import com.example.codefellowship.infrastructure.services.ApplicationUserService;
 import org.apache.catalina.Authenticator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -39,6 +42,9 @@ public class UserController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    ApplicationUserService applicationUserService;
 
 
 
@@ -86,11 +92,32 @@ public class UserController {
         return "profile";
     }
 
+    @GetMapping("/users")
+    public String getUsers(Model model){
+        model.addAttribute("users" , applicationUserService.findAllUsers());
+        return "users" ;
+    }
+
     @GetMapping("/users/{id}")
     public String getUserData(@PathVariable Long id, Model model){
         ApplicationUser applicationUser = applicationUserRepository.getById(id);
         model.addAttribute("user", applicationUser);
-        return "users";
+        return "user";
+    }
+
+    @PostMapping("/users/follow/{id}")
+    public RedirectView follow(@PathVariable Long id){
+        ApplicationUser applicationUser = applicationUserRepository.findUserById(id);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ApplicationUser loggedInUser = applicationUserRepository.findUserByUsername(userDetails.getUsername());
+        loggedInUser.addFollowing(applicationUser);
+        return new RedirectView("/users");
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<ApplicationUser> test(){
+        ApplicationUser applicationUser = new ApplicationUser("leana" ,"123456","Layana","Ayman","10/07/1997","my bio");
+        return new ResponseEntity<>(applicationUser , HttpStatus.ACCEPTED);
     }
 
 }
