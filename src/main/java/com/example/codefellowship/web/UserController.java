@@ -58,9 +58,7 @@ public class UserController {
                                     @RequestParam String lastName,
                                     @RequestParam String dateOfBirth,
                                     @RequestParam String bio){
-//        password= PasswordEncoder.encode(password);
         ApplicationUser applicationUser = new ApplicationUser(username, bcryptPasswordEncoder.encode(password), firstName, lastName, dateOfBirth, bio);
-//       applicationUser= applicationUserRepository.save(applicationUser);
         applicationUserRepository.save(applicationUser);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(applicationUser, null, applicationUser.getAuthorities());
