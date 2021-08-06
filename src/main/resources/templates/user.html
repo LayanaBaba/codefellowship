@@ -15,6 +15,15 @@
             <p th:text="'Bio '+ ${user.bio}"></p>
 <!--<p th:text="'pass '+ ${user.password}"></p>-->
 
+<div th:if="${showFollow == true}">
+    <form th:action="@{'/users/follow/'+${user.getId()}}" method="post">
+        <input type="submit" value="Follow" />
+    </form>
+</div>
+
+
+
+</div>
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>

@@ -95,6 +95,7 @@ public class UserController {
     @GetMapping("/users")
     public String getUsers(Model model){
         model.addAttribute("users" , applicationUserService.findAllUsers());
+//        model.addAttribute("showFollow", true);
         return "users" ;
     }
 
@@ -102,6 +103,16 @@ public class UserController {
     public String getUserData(@PathVariable Long id, Model model){
         ApplicationUser applicationUser = applicationUserRepository.getById(id);
         model.addAttribute("user", applicationUser);
+        UserDetails userDetails= (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ApplicationUser loggedIn = applicationUserRepository.findUserByUsername(userDetails.getUsername());
+
+        if(loggedIn.getId()!= id){
+            model.addAttribute("showFollow", true);
+        }
+        if (applicationUser.getFollowers().contains(loggedIn)) {
+            model.addAttribute("showFollow", false);
+        }
+
         return "user";
     }
 
@@ -111,7 +122,7 @@ public class UserController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ApplicationUser loggedInUser = applicationUserRepository.findUserByUsername(userDetails.getUsername());
         loggedInUser.addFollowing(applicationUser);
-        return new RedirectView("/users");
+        return new RedirectView("/users/{id}");
     }
 
     @GetMapping("/test")

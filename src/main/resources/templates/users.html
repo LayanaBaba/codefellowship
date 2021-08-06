@@ -7,17 +7,19 @@
 <body>
 <div th:replace="fragments/header :: header">...</div>
 
-<div th:each="user : ${users}">
+<div th:each="user : ${users}" >
     <h1 th:text="${user.firstName} + '  ' + ${user.lastName}"></h1>
     <p th:text="'Date of birth: ' + ${user.dateOfBirth}" ></p>
     <p th:text="'Bio: ' + ${user.bio}" ></p>
 
-    <form th:action="@{'/users/follow/'+${user.getId()}}" method="post">
-        <input type="submit" value="Follow" />
-    </form>
-
-
+<!--    <div th:if="${showFollow == true}">-->
+<!--        <form th:action="@{'/users/follow/'+${user.getId()}}" method="post">-->
+<!--            <input type="submit" value="Follow" />-->
+<!--        </form>-->
+<!--    </div>-->
 </div>
+
+
 
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
