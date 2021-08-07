@@ -122,6 +122,7 @@ public class UserController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ApplicationUser loggedInUser = applicationUserRepository.findUserByUsername(userDetails.getUsername());
         loggedInUser.addFollowing(applicationUser);
+        applicationUserService.createApplicationUser(loggedInUser);
         return new RedirectView("/users/{id}");
     }
 

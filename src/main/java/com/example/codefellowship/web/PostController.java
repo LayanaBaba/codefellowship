@@ -4,6 +4,7 @@ import com.example.codefellowship.domain.ApplicationUser;
 import com.example.codefellowship.domain.Post;
 import com.example.codefellowship.infrastructure.ApplicationUserRepository;
 import com.example.codefellowship.infrastructure.PostRepository;
+import com.example.codefellowship.infrastructure.services.ApplicationUserService;
 import com.example.codefellowship.infrastructure.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -29,6 +31,9 @@ public class PostController {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    ApplicationUserService applicationUserService;
 
     @PostMapping("/newpost")
     public RedirectView postNewPost(@RequestParam String body){
@@ -46,9 +51,16 @@ public class PostController {
         return new RedirectView("/profile");
     }
 
-    @GetMapping("feed")
-    public String allPosts(Model model){
-        model.addAttribute("posts", postService.getAllPosts());
+//    @GetMapping("/feed")
+//    public String allPosts(Model model){
+//        model.addAttribute("posts", postService.getAllPosts());
+//        return "feed";
+//    }
+
+    @GetMapping("/feed")
+    public String allPosts(Principal principal, Model model){
+        ApplicationUser applicationUser= applicationUserService.findUser(principal.getName());
+        model.addAttribute("user", applicationUser);
         return "feed";
     }
 

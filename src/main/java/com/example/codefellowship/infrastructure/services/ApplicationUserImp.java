@@ -17,4 +17,14 @@ public class ApplicationUserImp implements ApplicationUserService {
     public List<ApplicationUser> findAllUsers() {
         return applicationUserRepository.findAll();
     }
+
+    @Override
+    public ApplicationUser createApplicationUser(ApplicationUser applicationUser) {
+        return applicationUserRepository.save(applicationUser);
+    }
+
+    @Override
+    public ApplicationUser findUser(String username) {
+        return applicationUserRepository.findUserByUsername(username);
+    }
 }

@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface ApplicationUserService {
     List<ApplicationUser> findAllUsers();
+
+    ApplicationUser createApplicationUser(ApplicationUser applicationUser);
+
+    ApplicationUser findUser(String username);
 }

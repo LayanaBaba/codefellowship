@@ -6,14 +6,21 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header">...</div>
-
-<ul th:each="posts : ${posts}">
-    <li th:text="${posts.getBody}"></li>
-    <li th:text="${posts.getCreatedAt}"></li>
-</ul>
-
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>
+<!--<ul th:each="posts : ${posts}">-->
+<!--    <li th:text="${posts.getBody}"></li>-->
+<!--    <li th:text="${posts.getCreatedAt}"></li>-->
+<!--</ul>-->
+
+<div  th:each="account : ${user.following}">
+
+    <div  th:each="post : ${account.posts}">
+        <div th:text="${account.username}"></div>
+        <div th:text="${post.body}"></div>
+        <div th:text="${post.createdAt}"></div>
+    </div>
+</div>
 </body>
 </html>
