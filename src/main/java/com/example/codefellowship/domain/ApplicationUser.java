@@ -9,15 +9,13 @@ import java.util.*;
 
 @Entity
 public class ApplicationUser implements UserDetails {
-//    private Set<Role> roles = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(unique = true)
     private Long id;
+
     private String username;
     private String password;
-
     private String firstName;
     private String lastName;
     private String dateOfBirth;
@@ -27,6 +25,8 @@ public class ApplicationUser implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "applicationUser")
     private List<Post> posts;
 
+
+
     public List<Post> getPosts() {
         return posts;
     }
@@ -35,23 +35,23 @@ public class ApplicationUser implements UserDetails {
         this.posts = posts;
     }
 
+    @ManyToMany()
+    @JoinTable(
+            name = "user_user" ,
+            joinColumns = @JoinColumn(name="from_id") ,
+            inverseJoinColumns = @JoinColumn(name = "to_id")
+    )
+    private Set<ApplicationUser> following = new HashSet<>() ;
+
+    @ManyToMany
+    private Set<ApplicationUser> followers = new HashSet<>() ;
+
     public ApplicationUser() {
     }
 
     public ApplicationUser(String username, String password) {
         this.password = password;
         this.username = username;
-    }
-
-
-    public ApplicationUser(Long id, String username, String password, String firstName, String lastName, String dateOfBirth, String bio) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.bio = bio;
     }
 
     public ApplicationUser(String username, String password, String firstName, String lastName, String dateOfBirth, String bio) {
@@ -105,6 +105,19 @@ public class ApplicationUser implements UserDetails {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public Set<ApplicationUser> getFollowing() {
+        return following;
+    }
+
+    public Set<ApplicationUser> getFollowers() {
+        return followers;
+    }
+
+    public Set<ApplicationUser> addFollowing(ApplicationUser applicationUser){
+        following.add(applicationUser);
+        return following ;
     }
 
     @Override
