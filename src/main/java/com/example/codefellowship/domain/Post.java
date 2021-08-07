@@ -3,6 +3,7 @@ package com.example.codefellowship.domain;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "post")
 public class Post {
 
     @Id

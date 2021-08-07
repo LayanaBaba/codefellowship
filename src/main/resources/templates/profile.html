@@ -13,6 +13,10 @@
 <p th:text="'Date of birth : '+ ${user.dateOfBirth}"></p>
 <p th:text="'Bio '+ ${user.bio}"></p>
 
+<!--<form th:action="@{'/users/follow/'+${user.getId()}}" method="post">-->
+<!--    <input type="submit" value="Follow" />-->
+<!--</form>-->
+
 <form th:action="@{/newpost}" method="post">
     <input type="text" name="body"/>
     <input type="submit" value="Add your Post"/>
@@ -26,5 +30,7 @@
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>
+
+
 </body>
 </html>
